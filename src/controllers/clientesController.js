@@ -22,7 +22,24 @@ const mostrarClientes = async (req, res, next) =>{
         next()
     }
 }
+const mostrarCliente = async (req, res, next)=>{
+    try{
+        const cliente = await Clientes.findById(req.params.idCliente);
+        if(!cliente){
+            return res.status(404).json({mensaje: 'Client does not exit'});
+            
+        }else{
+            //Show the client
+            res.json(cliente);
+        }
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({mensaje:'Internal Server Error'})
+    }
+}
 export{
     nuevoCliente,
-    mostrarClientes
+    mostrarClientes,
+    mostrarCliente
 }
